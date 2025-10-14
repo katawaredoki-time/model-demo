@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Member Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-outer: #dcd7d1;
+        --paper: #f3eee8;
+        --accent: #966e8c;
+        --ink: #1f2937;
+      }
+      body {
+        font-family: "Noto Serif JP", serif;
+        background: linear-gradient(180deg, var(--bg-outer), #fcebce);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .card {
+        width: 100%;
+        max-width: 760px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(16, 24, 40, 0.12);
+        overflow: hidden;
+        background: transparent;
+      }
+      /* login view */
+      .decoy {
+        display: flex;
+        gap: 0;
+        background: transparent;
+      }
+      .decoy-left {
+        flex: 1;
+        padding: 36px;
+        background: linear-gradient(180deg, #f7f4f0, #f1ece8);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+      }
+      .decoy-right {
+        flex: 1;
+        padding: 36px;
+        background: linear-gradient(180deg, #fbf8f6, #f9f6f3);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+      }
+      .brand {
+        font-weight: 800;
+        color: var(--accent);
+        font-size: 22px;
+        margin-bottom: 8px;
+      }
+      .muted {
+        color: #6b7280;
+        font-size: 13px;
+      }
+      .input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #e6e2dd;
+        background: white;
+      }
+      .btn {
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      /* letter view */
+      .letter-wrap {
+        display: none;
+        padding: 36px;
+        background: var(--paper);
+        min-height: 360px;
+        border-radius: 12px;
+      }
+      .fade-enter {
+        animation: fadeInUp 0.6s ease both;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      /* play button */
+      .play-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        background: rgba(216, 207, 199, 0.95);
+        padding: 10px 14px;
+        border-radius: 999px;
+        backdrop-filter: blur(6px);
+        box-shadow: 0 6px 18px rgba(16, 24, 40, 0.12);
+        cursor: pointer;
+      }
+      /* responsive */
+      @media (max-width: 720px) {
+        .decoy {
+          flex-direction: column;
+        }
+        .decoy-left,
+        .decoy-right {
+          padding: 20px;
+        }
+        .letter-wrap {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div id="decoy" class="decoy">
+        <div class="decoy-left">
+          <div class="brand">Mono Studio</div>
+          <div class="muted">
+            Welcome back! Sign in to access exclusive content.
+          </div>
+
+          <div style="height: 14px"></div>
+
+          <label class="muted" for="user">User ID</label>
+          <input id="user" class="input" placeholder="Enter your user id" />
+
+          <div style="height: 12px"></div>
+
+          <label class="muted" for="pwd">Passcode</label>
+          <input
+            id="pwd"
+            type="password"
+            class="input"
+            placeholder="Enter passcode"
+          />
+
+          <div style="height: 14px"></div>
+
+          <div
+            style="display: flex; gap: 8px; width: 100%; align-items: center"
+          >
+            <button id="loginBtn" class="btn">Sign in</button>
+            <button
+              id="helpBtn"
+              class="muted"
+              style="background: transparent; border: none; cursor: pointer"
+            >
+              Need help?
+            </button>
+          </div>
+
+          <div
+            id="err"
+            style="
+              color: #b91c1c;
+              margin-top: 10px;
+              font-size: 13px;
+              display: none;
+            "
+          >
+            Invalid credentials.
+          </div>
+        </div>
+
+        <div class="decoy-right">
+          <h3 style="margin: 0; color: var(--ink); font-size: 20px">
+            Latest Collection
+          </h3>
+          <p class="muted" style="margin-top: 8px">
+            Curated photos & memory sets — members only.
+          </p>
+
+          <div style="height: 20px"></div>
+
+          <div style="display: flex; gap: 10px; flex-wrap: wrap">
+            <div
+              style="
+                width: 100px;
+                height: 80px;
+                border-radius: 8px;
+                background: #ede7e1;
+              "
+            ></div>
+            <div
+              style="
+                width: 100px;
+                height: 80px;
+                border-radius: 8px;
+                background: #efe7e6;
+              "
+            ></div>
+            <div
+              style="
+                width: 100px;
+                height: 80px;
+                border-radius: 8px;
+                background: #efe9e4;
+              "
+            ></div>
+          </div>
+
+          <div style="height: 20px"></div>
+          <p class="muted" style="font-size: 13px">
+            Not a member? You can still explore our free gallery.
+          </p>
+        </div>
+      </div>
+
+      <div id="letter" class="letter-wrap" aria-hidden="true">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+          "
+        >
+          <h2 style="margin: 0; font-size: 20px; color: var(--ink)">
+            ゆーちゃんへ
+          </h2>
+        </div>
+
+        <div style="height: 14px"></div>
+
+        <div
+          id="letterContent"
+          style="line-height: 1.85; font-size: 19px"
+          class="font-[Noto_Serif_JP] text-black"
+        ></div>
+      </div>
+    </div>
+
+    <button id="playBtn" class="play-btn" style="display: none">
+      🎵 音楽を流す
+    </button>
+    <audio id="bgm" src="yukisong.mp3" loop></audio>
+
+    <script>
+      const PASSCODE = "1002";
+      const REQUIRE_USERNAME = true;
+      const USERNAME = "0110";
+
+      // --- element refs ---
+      const btn = document.getElementById("loginBtn");
+      const userInput = document.getElementById("user");
+      const pwdInput = document.getElementById("pwd");
+      const errorEl = document.getElementById("err");
+      const decoy = document.getElementById("decoy");
+      const letter = document.getElementById("letter");
+      const playBtn = document.getElementById("playBtn");
+      const bgm = document.getElementById("bgm");
+      const letterContent = document.getElementById("letterContent");
+      const YOUR_HTML_LETTER = `
+<p class="font-[Noto_Serif_JP]">ヤッホーゆきちゃん。</p>
+
+<p class="font-[Noto_Serif_JP]">
+この手紙を読んでいるということは、たぶん今、僕たちは一緒にいないということなんだと思う。
+</p>
+
+<p class="font-[Noto_Serif_JP]">
+それは、君を愛することをやめたわけじゃない。むしろ、君を深く愛しているからこそ、君を傷つける理由になりたくないんだ。
+</p>
+
+<p class="font-[Noto_Serif_JP]">
+僕たちは本来、こんな立場にいるべきじゃないことは分かっている。君には、僕よりもずっと前から君の人生にいる大切な人がいる。
+そのことを、僕は心から尊重している。誰かを失う理由になりたくない。何より、君自身を失わせるような存在にはなりたくない。
+</p>
+
+<p class="font-[Noto_Serif_JP]">
+でも信じてほしい。僕たちが交わした言葉も、笑い合った時間も、あの一瞬一瞬は決して無駄じゃなかった。
+すべてが僕にとって、宝物のように大切な思い出だ。
+</p>
+
+<p class="font-[Noto_Serif_JP]">
+またいつか運命が僕たちを会わせてくれるかどうかは分からない。会えるかもしれないし、会えないかもしれない。
+でも、もし世界が少し優しいなら、そのときはお互い何の恐れもなく話せる日が来ると信じてる。
+穏やかな心で、あの頃と同じぬくもりを感じながら。
+</p>
+
+<p class="font-[Noto_Serif_JP]">
+君はもしかしたら、自分がしたことを迷っているかもしれない「私したことは悪いかな違うかな」。
+でもこの世界は、白か黒かだけじゃない。曖昧で、揺らいで、それでも美しい“灰色”でできている。
+</p>
+
+<p class="font-[Noto_Serif_JP]">
+ひとつだけ確かなことは、君は決して悪い人なんかじゃないということ。
+たとえ誰が何を言おうと、僕はいつも君の味方でいる。君が何を選んでも、僕は君を応援する。
+そして、どんなときも君を愛している。だから怖がらないで。僕はずっと、君のそばにいる。
+</p>
+
+<p class="font-[Noto_Serif_JP]">
+僕はSNSに気持ちを書くタイプじゃない。ツイートや投稿で心を表すのは、少し苦手なんだ。
+でも忘れないでほしい。僕が黙っているときも、ちゃんと君を想っている。
+</p>
+
+<p class="font-[Noto_Serif_JP]">
+言葉にはしない祈りがあって、君を守るために抑えた想いがある。
+そして、この想いはどんなに離れても消えない。
+</p>
+
+<p class="font-[Noto_Serif_JP]">
+僕の世界を少し明るくしてくれてありがとう。たとえ短い時間だったとしても、君と出会えたことは僕の一生の宝だ。
+</p>
+<br>
+<p class="font-[Noto_Serif_JP]">
+ゆきちゃん、どうか自分を大切にしてね! ちゃんと食べて、しっかり休んでね、無理をしないでよ。
+そして、僕が知っている可愛いや優しい君のままでいてね。「まあ、君はいつも可愛いね笑」
+</p>
+
+<p class="font-[Noto_Serif_JP]">
+もしいつか、君が帰る場所を探すとき、「大丈夫だよ、ゆきちゃんはよく頑張ったね」って言ってくれる声が必要なとき、
+そのときは迷わず僕を思い出して連絡してね。
+</p>
+
+<p class="font-[Noto_Serif_JP]">
+僕は遠くへ行かない。ただ、君の幸せを祈る静かな場所にいるだけだから。
+</p>
+
+<p class="font-[Noto_Serif_JP]">
+僕のすべての誠意と愛をこめて。
+</p>
+<br>
+<p class="font-[Noto_Serif_JP]">大好きだよゆきちゃん！</p>
+
+<section class="mt-16 bg-white/5 rounded-2xl p-6 backdrop-blur-sm">
+  <h2 class="text-center text-xl font-semibold text-purple-300 mb-4 tracking-wide">
+    〜 Mono and Yuki 〜
+  </h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+    <img src="1.png" alt="Memory 1" class="rounded-xl shadow-md hover:opacity-90 transition">
+    <img src="2.jpg" alt="Memory 2" class="rounded-xl shadow-md hover:opacity-90 transition">
+    <img src="3.jpg" alt="Memory 3" class="rounded-xl shadow-md hover:opacity-90 transition">
+    <img src="4.jpg" alt="Memory 4" class="rounded-xl shadow-md hover:opacity-90 transition">
+    <img src="5.jpg" alt="Memory 5" class="rounded-xl shadow-md hover:opacity-90 transition">
+    <img src="6.jpg" alt="Memory 6" class="rounded-xl shadow-md hover:opacity-90 transition">
+    <img src="7.jpg" alt="Memory 7" class="rounded-xl shadow-md hover:opacity-90 transition">
+    <img src="8.jpg" alt="Memory 8" class="rounded-xl shadow-md hover:opacity-90 transition">
+    <img src="9.jpg" alt="Memory 9" class="rounded-xl shadow-md hover:opacity-90 transition">
+    <img src="10.jpg" alt="Memory 10" class="rounded-xl shadow-md hover:opacity-90 transition">
+  </div>
+</section>
+
+`;
+
+      function insertLetterContent() {
+        letterContent.innerHTML = YOUR_HTML_LETTER;
+      }
+
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        errorEl.style.display = "none";
+        const pwd = (pwdInput.value || "").trim();
+        const user = (userInput.value || "").trim();
+
+        if (pwd === PASSCODE && (!REQUIRE_USERNAME || user === USERNAME)) {
+          revealLetter();
+        } else {
+          errorEl.style.display = "block";
+          btn.animate(
+            [
+              { transform: "translateX(0)" },
+              { transform: "translateX(-6px)" },
+              { transform: "translateX(6px)" },
+              { transform: "translateX(0)" },
+            ],
+            { duration: 300 }
+          );
+        }
+      });
+
+      // reveal function
+      function revealLetter() {
+        decoy.style.display = "none";
+        letter.style.display = "block";
+        letter.classList.add("fade-enter");
+        letter.setAttribute("aria-hidden", "false");
+        insertLetterContent();
+        playBtn.style.display = "block";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      let playing = false;
+      playBtn.addEventListener("click", async () => {
+        if (!playing) {
+          try {
+            bgm.volume = 0;
+            await bgm.play();
+            playing = true;
+            playBtn.textContent = "⏸️ 停止";
+            let v = 0;
+            const id = setInterval(() => {
+              v += 0.02;
+              bgm.volume = Math.min(v, 0.35);
+              if (v >= 0.35) clearInterval(id);
+            }, 120);
+          } catch (err) {
+            console.warn("Audio play blocked or failed", err);
+          }
+        } else {
+          bgm.pause();
+          playing = false;
+          playBtn.textContent = "🎵 音楽を流す";
+        }
+      });
+
+      [userInput, pwdInput].forEach((inp) => {
+        inp.addEventListener("keydown", (ev) => {
+          if (ev.key === "Enter") btn.click();
+        });
+      });
+
+      // hide error when typing
+      pwdInput.addEventListener(
+        "input",
+        () => (errorEl.style.display = "none")
+      );
+      userInput.addEventListener(
+        "input",
+        () => (errorEl.style.display = "none")
+      );
+    </script>
+  </body>
+</html>
