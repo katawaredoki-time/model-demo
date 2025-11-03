@@ -342,6 +342,20 @@
 <br>
 <p class="font-[Noto_Serif_JP]">大好きだよゆきちゃん！</p>
 
+<div class="mt-10 text-center">
+      <h2 class="text-lg font-semibold mb-3 text-yellow-500">
+        🎧 Mono ボイスメッセージ
+      </h2>
+      <audio id="voice" src="voicerecord.m4a"></audio>
+      <button
+        id="voiceButton"
+        class="bg-[#fcebce] hover:bg-yellow-600 text-slate-800 font-medium text-sm px-5 py-2 rounded-full shadow-md transition-all"
+      >
+      Mono ボイスメッセージを流す
+      </button>
+      <br>
+      *もし聞いたら知らせてくれ！例えば、Ｘでこんなツイート作って「BGM聞きました😈」とか笑、まあ僕は知りたいだけゆきちゃんはもう聞いたかどうか^^<br>ありがとうね♡
+    </div>
 <section class="mt-16 bg-white/5 rounded-2xl p-6 backdrop-blur-sm">
   <h2 class="text-center text-xl font-semibold text-purple-300 mb-4 tracking-wide">
     〜 Mono and Yuki 〜
@@ -364,6 +378,22 @@
 
       function insertLetterContent() {
         letterContent.innerHTML = YOUR_HTML_LETTER;
+        const voice = document.getElementById("voice");
+        const button = document.getElementById("voiceButton");
+
+        button.addEventListener("click", () => {
+          if (voice.paused) {
+            voice.play();
+            button.textContent = "停止";
+          } else {
+            voice.pause();
+            button.textContent = "Mono ボイスメッセージを流す";
+          }
+        });
+
+        voice.addEventListener("ended", () => {
+          button.textContent = "Mono ボイスメッセージを流す";
+        });
       }
 
       btn.addEventListener("click", (e) => {
